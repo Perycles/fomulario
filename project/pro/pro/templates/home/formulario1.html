@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %} Formularios {% endblock %}
+{% block content %} 
+
+{% if info_enviado %}
+	<h1>Gracias por completar el formulario.</h1>
+	<p><b>Nombre del Alumno:</b> {{Nombre}}</p>
+	<p><b>Primer Apellido:</b> {{Primer_Apellido}}</p>
+	<p><b>Segundo Apellido:</b> {{Segundo_Apellido}}</p>
+	<p><b>Fecha de Nacimiento:</b> {{Fecha_de_Nacimiento}}</p>
+	<p><b>Provincia:</b> {{Provincia}}</p>
+	<p><b>DNI:</b> {{DNI}}</p>
+	<p><b>Codigo postal:</b> {{Codigo_Postal}}</p>
+	<p><b>Telefono:</b> {{Telefono}}</p>
+	<p><b>Movil:</b> {{Movil}}</p>
+	<p><b>Email:</b> {{Email}}</p>
+	<p><b>Estudios anteriores:</b> {{Estudios_anteriores}}</p>
+	<p><b>Observaciones:</b> {{Observaciones}}</p>
+{% else %}
+	<form action="." method="POST">
+		{% csrf_token %}
+		{{form.as_p}}
+<br><br>		
+		<input type="submit" value="Guardar Formulario">
+		<input type="reset" value="Limpiar">
+{% if user.is_authenticated %}
+		<a class="boton" href="{% url "vista_cuestiones" %}">Agregar cuestión</a>
+		<a class="boton" href="{% url "vista_respuestas" %}">Respuestas</a>
+{% endif %}
+		{% if user.is_authenticated %}
+		<a class="boton" href="{% url "vista_logout" %}"> Cerrar Sesion </a>
+		{% else %}
+		<a class="boton" href="{% url "vista_login" %}"> Abrir Sesion</a>
+		{% endif %}
+<br><br>
+	</form>
+	<p class="fijo" align="center"><b>{{ info2 }}</b></p>
+<br><br>
+{% endif %}
+{% endblock %}
